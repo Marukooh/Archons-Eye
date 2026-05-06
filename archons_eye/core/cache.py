@@ -70,6 +70,15 @@ class Cache:
         ).fetchone()
         return self._row_to_system(row) if row else None
 
+    def delete_systems(self, names: list[str]) -> None:
+        if not names:
+            return
+        placeholders = ",".join("?" * len(names))
+        with self._conn:
+            self._conn.execute(
+                f"DELETE FROM systems WHERE name IN ({placeholders})", names
+            )
+
     @staticmethod
     def _row_to_system(row: sqlite3.Row) -> StarSystem:
         s = StarSystem(name=row["name"])
