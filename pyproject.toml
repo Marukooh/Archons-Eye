@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "archons-eye"
+version = "0.1.0"
+description = "Real-time piracy scouting tool for Elite Dangerous"
+requires-python = ">=3.12"
+dependencies = [
+    "pyzmq>=26.0",
+    "PySide6>=6.7",
+    "httpx>=0.27",
+    "qasync>=0.27",
+    "pandas>=2.2",
+]
+
+[project.scripts]
+archons-eye = "archons_eye.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["archons_eye"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
