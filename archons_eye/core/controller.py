@@ -234,6 +234,7 @@ class Controller:
             self._cmdr_seen.pop(name, None)
         if stale:
             log.info("Pruned %d stale systems", len(stale))
+            self._cache.delete_systems(stale)
         # Prune unbounded dicts so memory doesn't grow across long sessions
         stale_set = set(stale)
         self._last_log_per_system = {k: v for k, v in self._last_log_per_system.items() if k not in stale_set}
@@ -507,7 +508,5 @@ class Controller:
             return
         self._last_log_per_system[system_name] = now
         log.info(message)
-        if self.on_log:
-            self.on_log(message)
         if self.on_log:
             self.on_log(message)

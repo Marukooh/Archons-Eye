@@ -5,6 +5,7 @@ import logging
 import os
 import random
 import time
+import weakref
 from datetime import datetime
 
 from PySide6.QtWidgets import (
@@ -199,13 +200,19 @@ _HUD_TICKS = [0.12, 0.28, 0.50, 0.72, 0.88]
 # they are always perfectly synchronised.
 _hud_phase: float = 0.0
 _hud_timer: QTimer | None = None
-_hud_instances: list["HudDividerWidget"] = []
+_hud_instances: weakref.WeakSet["HudDividerWidget"] = weakref.WeakSet()
 
 
 def _hud_tick() -> None:
-    global _hud_phase
+    global _hud_phase, _hud_timer
     _hud_phase = (_hud_phase + 0.008) % 1.0
-    for w in _hud_instances:
+    instances = list(_hud_instances)
+    if not instances:
+        if _hud_timer is not None:
+            _hud_timer.stop()
+            _hud_timer = None
+        return
+    for w in instances:
         w.update()
 
 
@@ -224,7 +231,7 @@ class HudDividerWidget(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setMinimumWidth(60)
 
-        _hud_instances.append(self)
+        _hud_instances.add(self)
 
         global _hud_timer
         if _hud_timer is None:
