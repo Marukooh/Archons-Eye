@@ -84,6 +84,7 @@ exe = EXE(
     a.datas,
     [],
     name="Archon's Eye",
+    icon='archons_eye/gui/resources/Archon_Delaine_Green_Vector.ico',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
