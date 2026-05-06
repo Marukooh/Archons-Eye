@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+*.egg
+
+# PyInstaller
+build/
+*.spec.bak
+
+# Runtime data (stored in AppData, not the repo)
+*.db
+*.db-shm
+*.db-wal
+*.log
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Hidden folders
+.*/ 
